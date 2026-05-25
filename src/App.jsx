@@ -98,7 +98,7 @@ function NavButton({ icon, label, sub, onClick, accent }) {
         background: accent ? RED : "#f5f5f5",
         color: accent ? "#fff" : "#111",
         border: "none",
-        borderRadius: "12px",
+        borderRadius: "18px",
         padding: "16px 18px",
         display: "flex",
         alignItems: "center",
@@ -181,8 +181,8 @@ function HomePage({ navigate }) {
   marginBottom: "18px",
 }}>
   <div style={{
-    fontSize: "20px",
-    fontWeight: "800",
+    fontSize: "18px",
+    fontWeight: "700",
     color: "#111",
     marginBottom: "8px",
     lineHeight: "1.2",
@@ -208,19 +208,23 @@ function HomePage({ navigate }) {
 }}>
 
 {[
-  {
+{
+    icon: "🎯",
     title: "Fitness-Focused Audience",
     sub: "People investing in fitness and lifestyle are naturally higher-intent consumers."
   },
   {
+    icon: "👁",
     title: "High Attention Environment",
     sub: "Unlike crowded feeds, gym environments create calmer and more focused visibility."
   },
   {
+    icon: "🔁",
     title: "Daily Brand Recall",
     sub: "Repeated exposure during workouts improves familiarity and local recognition."
   },
   {
+    icon: "📍",
     title: "Premium Local Reach",
     sub: "Position your brand inside active communities across Kozhikode."
   },
@@ -228,13 +232,28 @@ function HomePage({ navigate }) {
     <div
       key={i}
       style={{
-        background: "#fcfcfc",
-        border: "1px solid #f5f5f5",
+        background: "#ffffff",
+        border: "1px solid #efefef",
+        boxShadow: "0 2px 10px rgba(0,0,0,0.03)",
         borderRadius: "12px",
         padding: "18px",
         boxSizing: "border-box",
       }}
     >
+
+      <div style={{
+  width: "38px",
+  height: "38px",
+  background: "#fff5f5",
+  borderRadius: "10px",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  marginBottom: "14px",
+  fontSize: "18px",
+}}>
+  {item.icon}
+</div>
       <div style={{
         fontSize: "12px",
         fontWeight: "700",
