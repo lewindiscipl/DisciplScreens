@@ -1,18 +1,28 @@
 import { useState, useEffect } from "react";
 
-const BASE = 2500;
 const PHONE = "+919746488282";
+const BASE = 2500;
+
+const LOCATIONS = [
+  { name: "Core Fitness Club", area: "Cherooty Road" },
+  { name: "Fitpro Fitness", area: "Eranhipalam" },
+  { name: "FitFat Studio", area: "Thondayad" },
+  { name: "Greens Fitness", area: "Mankavu Road" },
+  { name: "Alpha Fitness Zone", area: "Nanminda" },
+  { name: "Alpha Fitness Zone", area: "Atholi" },
+  { name: "Alpha Fitness Zone", area: "Chelannur" },
+];
 
 const DURATION_DISCOUNTS = [
-  { months: 1,  discount: 0 },
-  { months: 2,  discount: 0.08 },
-  { months: 3,  discount: 0.20 },
-  { months: 4,  discount: 0.26 },
-  { months: 5,  discount: 0.30 },
-  { months: 6,  discount: 0.35 },
-  { months: 7,  discount: 0.37 },
-  { months: 8,  discount: 0.39 },
-  { months: 9,  discount: 0.41 },
+  { months: 1, discount: 0 },
+  { months: 2, discount: 0.08 },
+  { months: 3, discount: 0.20 },
+  { months: 4, discount: 0.26 },
+  { months: 5, discount: 0.30 },
+  { months: 6, discount: 0.35 },
+  { months: 7, discount: 0.37 },
+  { months: 8, discount: 0.39 },
+  { months: 9, discount: 0.41 },
   { months: 10, discount: 0.42 },
   { months: 11, discount: 0.43 },
   { months: 12, discount: 0.45 },
@@ -29,19 +39,10 @@ const SCREEN_DISCOUNTS = [
 ];
 
 const SECTORS = [
-  "Supplements & Nutrition",
-  "Gymwear & Apparel",
-  "Salon & Grooming",
-  "Skincare & Wellness",
-  "Café & Healthy Food",
-  "Clinic & Healthcare",
-  "Real Estate",
-  "Education & Coaching",
-  "Electronics & Tech",
-  "Hotels & Resorts",
-  "Jewellery & Fashion",
-  "Finance & Banking",
-  "Other",
+  "Supplements & Nutrition","Gymwear & Apparel","Salon & Grooming",
+  "Skincare & Wellness","Café & Healthy Food","Clinic & Healthcare",
+  "Real Estate","Education & Coaching","Electronics & Tech",
+  "Hotels & Resorts","Jewellery & Fashion","Finance & Banking","Other",
 ];
 
 function calcPrice(screens, months) {
@@ -50,379 +51,398 @@ function calcPrice(screens, months) {
   const combined = Math.min(dd + sd, 0.70);
   const perScreen = Math.round(BASE * (1 - combined));
   const total = perScreen * screens * months;
-  return { perScreen, total, combined };
+  return { perScreen, total };
 }
 
-function getBadge(screens, months) {
-  if (screens >= 7 && months >= 6) return { label: "⭐ BEST VALUE", color: "#047857", bg: "#ECFDF5" };
-  if (screens >= 5 && months >= 3) return { label: "🔥 MOST POPULAR", color: "#C0202A", bg: "#FDF2F2" };
-  if (months >= 6) return { label: "💎 GREAT DEAL", color: "#0369A1", bg: "#E0F2FE" };
-  return null;
+const RED = "#C0202A";
+const FONT = "'Trebuchet MS', 'Segoe UI', sans-serif";
+
+// Single SVG logo — replica of the DISCIPL SCREENS brand mark
+function LogoImage() {
+  return (
+    <div style={{ width: "220px", marginBottom: "12px" }}>
+      <svg viewBox="0 0 480 180" xmlns="http://www.w3.org/2000/svg" style={{ width: "100%", display: "block" }}>
+        {/* D body */}
+        <rect x="0" y="0" width="90" height="130" fill="#111"/>
+        <ellipse cx="58" cy="65" rx="32" ry="42" fill="#fff"/>
+        <rect x="0" y="10" width="38" height="110" fill="#fff"/>
+        {/* Red arc */}
+        <path d="M26 15 Q88 65 26 115" stroke={RED} strokeWidth="16" fill="none" strokeLinecap="butt"/>
+        {/* Play arrow */}
+        <polygon points="20,52 20,78 42,65" fill="#fff"/>
+        {/* i */}
+        <rect x="102" y="30" width="18" height="70" rx="2" fill="#111"/>
+        <rect x="102" y="6" width="18" height="16" fill={RED}/>
+        {/* S */}
+        <text x="130" y="102" fontFamily="Arial Black, Arial, sans-serif" fontSize="98" fontWeight="900" fill="#111">S</text>
+        {/* C */}
+        <text x="198" y="102" fontFamily="Arial Black, Arial, sans-serif" fontSize="98" fontWeight="900" fill="#111">C</text>
+        {/* i */}
+        <rect x="272" y="30" width="18" height="70" rx="2" fill="#111"/>
+        <rect x="272" y="6" width="18" height="16" fill={RED}/>
+        {/* P */}
+        <text x="298" y="102" fontFamily="Arial Black, Arial, sans-serif" fontSize="98" fontWeight="900" fill="#111">P</text>
+        {/* L */}
+        <text x="365" y="102" fontFamily="Arial Black, Arial, sans-serif" fontSize="98" fontWeight="900" fill="#111">L</text>
+        {/* SCREENS */}
+        <text x="10" y="160" fontFamily="'Trebuchet MS', Arial, sans-serif" fontSize="24" fontWeight="400" fill="#111" letterSpacing="19">SCREENS</text>
+      </svg>
+    </div>
+  );
 }
 
-function getIncludes(months) {
-  const list = ["Ad placement across selected screens"];
-  if (months >= 3) list.push("Change creatives anytime");
-  if (months >= 6) list.push("Category exclusivity");
-  return list;
+function ScreenIcon() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="2" y="3" width="20" height="14" rx="2"/>
+      <line x1="8" y1="21" x2="16" y2="21"/>
+      <line x1="12" y1="17" x2="12" y2="21"/>
+    </svg>
+  );
 }
 
-export default function App() {
+function PriceIcon() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <line x1="12" y1="1" x2="12" y2="23"/>
+      <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+    </svg>
+  );
+}
+
+function NavButton({ icon, label, sub, onClick, accent }) {
+  const [pressed, setPressed] = useState(false);
+  return (
+    <button
+      onMouseDown={() => setPressed(true)}
+      onMouseUp={() => setPressed(false)}
+      onTouchStart={() => setPressed(true)}
+      onTouchEnd={() => setPressed(false)}
+      onClick={onClick}
+      style={{
+        width: "100%",
+        background: accent ? RED : "#f5f5f5",
+        color: accent ? "#fff" : "#111",
+        border: "none",
+        borderRadius: "12px",
+        padding: "16px 18px",
+        display: "flex",
+        alignItems: "center",
+        gap: "14px",
+        cursor: "pointer",
+        fontFamily: FONT,
+        textAlign: "left",
+        transform: pressed ? "scale(0.97)" : "scale(1)",
+        transition: "transform 0.1s",
+        boxShadow: accent ? "0 4px 16px rgba(192,32,42,0.25)" : "0 1px 4px rgba(0,0,0,0.06)",
+        boxSizing: "border-box",
+      }}
+    >
+      <div style={{
+        width: "42px", height: "42px",
+        background: accent ? "rgba(255,255,255,0.15)" : "#e8e8e8",
+        borderRadius: "10px",
+        display: "flex", alignItems: "center", justifyContent: "center",
+        flexShrink: 0,
+        color: accent ? "#fff" : RED,
+      }}>
+        {icon}
+      </div>
+      <div>
+        <div style={{ fontSize: "15px", fontWeight: "700" }}>{label}</div>
+        <div style={{ fontSize: "12px", opacity: 0.6, marginTop: "2px" }}>{sub}</div>
+      </div>
+      <div style={{ marginLeft: "auto", opacity: 0.4, fontSize: "18px" }}>›</div>
+    </button>
+  );
+}
+
+function HomePage({ navigate }) {
+  return (
+    <div style={{
+      minHeight: "100vh",
+      background: "#fff",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+      fontFamily: FONT,
+      padding: "32px 24px",
+      boxSizing: "border-box",
+    }}>
+      <LogoImage />
+
+      <p style={{
+        fontSize: "11px",
+        color: "#777",
+        letterSpacing: "1.5px",
+        textTransform: "uppercase",
+        margin: "0 0 40px 0",
+        textAlign: "center",
+        fontWeight: "500",
+      }}>
+        Right Place · Right People · Real Impact
+      </p>
+
+      <div style={{ width: "100%", maxWidth: "340px", display: "flex", flexDirection: "column", gap: "12px" }}>
+        <NavButton
+          icon={<ScreenIcon />}
+          label="Our Screens"
+          sub="7 premium gym locations"
+          onClick={() => navigate("locations")}
+        />
+        <NavButton
+          icon={<PriceIcon />}
+          label="Pricing"
+          sub="Build your custom quote"
+          onClick={() => navigate("pricing")}
+          accent
+        />
+      </div>
+
+      <div style={{ marginTop: "40px", fontSize: "11px", color: "#ccc", letterSpacing: "0.5px", textAlign: "center" }}>
+        A Habitoz Private Limited Brand
+      </div>
+    </div>
+  );
+}
+
+function LocationsPage({ navigate }) {
+  return (
+    <div style={{ minHeight: "100vh", background: "#fff", fontFamily: FONT, display: "flex", flexDirection: "column" }}>
+      <div style={{
+        padding: "16px 20px",
+        borderBottom: "1px solid #f0f0f0",
+        display: "flex",
+        alignItems: "center",
+        gap: "12px",
+        position: "sticky",
+        top: 0,
+        background: "#fff",
+        zIndex: 10,
+      }}>
+        <button onClick={() => navigate("home")} style={{ background: "none", border: "none", cursor: "pointer", fontSize: "22px", color: "#111", padding: "0", lineHeight: 1 }}>‹</button>
+        <div>
+          <div style={{ fontSize: "17px", fontWeight: "800", color: "#111" }}>Our Screens</div>
+          <div style={{ fontSize: "11px", color: "#999", letterSpacing: "1px" }}>7 GYM LOCATIONS · KOZHIKODE</div>
+        </div>
+      </div>
+
+      <div style={{ background: "#fafafa", padding: "12px 20px", borderBottom: "1px solid #f0f0f0", display: "flex", alignItems: "center", gap: "10px" }}>
+        <div style={{ width: "34px", height: "34px", background: RED, borderRadius: "8px", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <rect x="2" y="3" width="20" height="14" rx="2"/>
+            <line x1="8" y1="21" x2="16" y2="21"/>
+            <line x1="12" y1="17" x2="12" y2="21"/>
+          </svg>
+        </div>
+        <div style={{ fontSize: "13px", color: "#555", lineHeight: "1.4" }}>
+          Premium digital screens inside active fitness communities across Kozhikode.
+        </div>
+      </div>
+
+      <div style={{ padding: "4px 20px 24px" }}>
+        {LOCATIONS.map((loc, i) => (
+          <div key={i} style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "14px",
+            padding: "14px 0",
+            borderBottom: i < LOCATIONS.length - 1 ? "1px solid #f2f2f2" : "none",
+          }}>
+            <div style={{
+              width: "34px", height: "34px",
+              background: "#f5f5f5",
+              borderRadius: "50%",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              flexShrink: 0,
+              fontWeight: "700",
+              fontSize: "13px",
+              color: RED,
+            }}>{i + 1}</div>
+            <div style={{ flex: 1 }}>
+              <div style={{ fontSize: "15px", fontWeight: "700", color: "#111" }}>{loc.name}</div>
+              <div style={{ fontSize: "12px", color: "#888", marginTop: "2px", display: "flex", alignItems: "center", gap: "4px" }}>
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#aaa" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                  <circle cx="12" cy="10" r="3"/>
+                </svg>
+                {loc.area}
+              </div>
+            </div>
+            <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#22c55e", flexShrink: 0 }}/>
+          </div>
+        ))}
+      </div>
+
+      <div style={{ padding: "0 20px 32px", marginTop: "auto" }}>
+        <button onClick={() => navigate("pricing")} style={{
+          width: "100%", background: RED, color: "#fff", border: "none",
+          borderRadius: "10px", padding: "15px", fontSize: "15px", fontWeight: "700",
+          cursor: "pointer", fontFamily: FONT, boxSizing: "border-box",
+        }}>
+          Get Pricing for These Screens →
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function PricingPage({ navigate }) {
   const [screens, setScreens] = useState(5);
   const [months, setMonths] = useState(3);
   const [brand, setBrand] = useState("");
   const [sector, setSector] = useState("");
   const [error, setError] = useState("");
   const [pulse, setPulse] = useState(false);
+  const [needCreative, setNeedCreative] = useState(false);
 
   const { perScreen, total } = calcPrice(screens, months);
-  const badge = getBadge(screens, months);
-  const includes = getIncludes(months);
   const savings = Math.round((BASE * screens * months) - total);
 
   useEffect(() => {
     setPulse(true);
-    const t = setTimeout(() => setPulse(false), 300);
+    const t = setTimeout(() => setPulse(false), 280);
     return () => clearTimeout(t);
   }, [screens, months]);
 
+  const includes = [
+    { icon: "✓", text: "Ads placed on your selected screens", sub: null, locked: false, always: true },
+    { icon: months >= 2 ? "✓" : "🔒", text: "Change creatives anytime", sub: months < 2 ? "· unlocks at 2 months" : null, locked: months < 2, always: false },
+    { icon: months >= 4 ? "✓" : "🔒", text: "Category exclusivity", sub: months < 4 ? "· unlocks at 4 months" : "No competing brand runs on your selected screens", locked: months < 4, always: false },
+  ];
+
   function handleWhatsApp() {
-    if (!brand.trim()) {
-      setError("Please enter your brand name to continue.");
-      return;
-    }
+    if (!brand.trim()) { setError("Please enter your brand name to continue."); return; }
     setError("");
-    const msg =
-`Hi DISCIPL Screens,
-
-I'm interested in advertising on your network.
-
-Brand: ${brand.trim()}
-Sector: ${sector || "Not specified"}
-Screens: ${screens}
-Duration: ${months} month${months > 1 ? "s" : ""}
-Per Screen / Month: ₹${perScreen.toLocaleString("en-IN")}
-Total Investment: ₹${total.toLocaleString("en-IN")}
-
-Please get in touch with me.`;
-
-    const url = `https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`;
-    window.open(url, "_blank");
+    const creativeLine = needCreative ? "\nCreative Help: Yes, I need help designing my ad creative." : "";
+    const msg = `Hi DISCIPL Screens,\n\nI'm interested in advertising on your network.\n\nBrand: ${brand.trim()}\nSector: ${sector || "Not specified"}\nScreens: ${screens}\nDuration: ${months} month${months > 1 ? "s" : ""}\nPer Screen / Month: ₹${perScreen.toLocaleString("en-IN")}\nTotal Investment: ₹${total.toLocaleString("en-IN")}${creativeLine}\n\nPlease get in touch with me.`;
+    window.open(`https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`, "_blank");
   }
 
   return (
-    <div style={{
-      minHeight: "100vh",
-      background: "#0d0d0d",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "flex-start",
-      fontFamily: "'Trebuchet MS', sans-serif",
-      padding: "0",
-    }}>
+    <div style={{ minHeight: "100vh", background: "#fff", fontFamily: FONT, display: "flex", flexDirection: "column" }}>
       <div style={{
-        width: "100%",
-        maxWidth: "420px",
-        minHeight: "100vh",
-        display: "flex",
-        flexDirection: "column",
-        background: "#111",
+        padding: "16px 20px",
+        borderBottom: "1px solid #f0f0f0",
+        display: "flex", alignItems: "center", gap: "12px",
+        position: "sticky", top: 0, background: "#fff", zIndex: 10,
       }}>
-
-        {/* TOP BAR */}
-        <div style={{
-          background: "#C0202A",
-          padding: "20px 20px 16px",
-        }}>
-          <div style={{
-            fontSize: "10px",
-            letterSpacing: "3px",
-            color: "rgba(255,255,255,0.6)",
-            marginBottom: "4px",
-          }}>DISCIPL SCREENS</div>
-          <div style={{
-            fontSize: "22px",
-            fontWeight: "bold",
-            color: "#fff",
-            letterSpacing: "-0.3px",
-          }}>Ad Quote Builder</div>
-          <div style={{
-            fontSize: "12px",
-            color: "rgba(255,255,255,0.6)",
-            marginTop: "2px",
-          }}>Get your custom advertising price instantly</div>
+        <button onClick={() => navigate("home")} style={{ background: "none", border: "none", cursor: "pointer", fontSize: "22px", color: "#111", padding: "0", lineHeight: 1 }}>‹</button>
+        <div>
+          <div style={{ fontSize: "17px", fontWeight: "800", color: "#111" }}>Pricing</div>
+          <div style={{ fontSize: "11px", color: "#999", letterSpacing: "1px" }}>BUILD YOUR CUSTOM QUOTE</div>
         </div>
+      </div>
 
-        {/* BRAND NAME */}
-        <div style={{ padding: "20px 20px 0" }}>
-          <label style={{
-            fontSize: "10px",
-            letterSpacing: "2px",
-            color: "#888",
-            display: "block",
-            marginBottom: "8px",
-          }}>BRAND NAME *</label>
+      <div style={{ padding: "0 20px", flex: 1, boxSizing: "border-box" }}>
+
+        <div style={{ paddingTop: "18px" }}>
+          <label style={{ fontSize: "10px", letterSpacing: "2px", color: "#888", display: "block", marginBottom: "8px" }}>BRAND NAME *</label>
           <input
             value={brand}
             onChange={e => { setBrand(e.target.value); setError(""); }}
             placeholder="e.g. Alpha Supplements"
             style={{
-              width: "100%",
-              background: "#1a1a1a",
-              border: error ? "1px solid #C0202A" : "1px solid #2a2a2a",
-              borderRadius: "8px",
-              color: "#fff",
-              fontSize: "16px",
-              padding: "12px 14px",
-              outline: "none",
-              boxSizing: "border-box",
-              fontFamily: "'Trebuchet MS', sans-serif",
+              width: "100%", background: "#fafafa",
+              border: error ? `1.5px solid ${RED}` : "1.5px solid #e8e8e8",
+              borderRadius: "10px", color: "#111", fontSize: "16px",
+              padding: "12px 14px", outline: "none", boxSizing: "border-box", fontFamily: FONT,
             }}
           />
-          {error && (
-            <div style={{ color: "#C0202A", fontSize: "12px", marginTop: "6px" }}>{error}</div>
-          )}
+          {error && <div style={{ color: RED, fontSize: "12px", marginTop: "6px" }}>{error}</div>}
         </div>
 
-        {/* SECTOR */}
-        <div style={{ padding: "16px 20px 0" }}>
-          <label style={{
-            fontSize: "10px",
-            letterSpacing: "2px",
-            color: "#888",
-            display: "block",
-            marginBottom: "8px",
-          }}>SECTOR (OPTIONAL)</label>
-          <select
-            value={sector}
-            onChange={e => setSector(e.target.value)}
-            style={{
-              width: "100%",
-              background: "#1a1a1a",
-              border: "1px solid #2a2a2a",
-              borderRadius: "8px",
-              color: sector ? "#fff" : "#555",
-              fontSize: "15px",
-              padding: "12px 14px",
-              outline: "none",
-              boxSizing: "border-box",
-              fontFamily: "'Trebuchet MS', sans-serif",
-              appearance: "none",
-            }}
-          >
-            <option value="">Select your sector...</option>
-            {SECTORS.map(s => (
-              <option key={s} value={s} style={{ color: "#fff", background: "#1a1a1a" }}>{s}</option>
-            ))}
-          </select>
-        </div>
-
-        {/* SCREENS SLIDER */}
-        <div style={{ padding: "20px 20px 0" }}>
-          <div style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            marginBottom: "10px",
-          }}>
-            <label style={{ fontSize: "10px", letterSpacing: "2px", color: "#888" }}>
-              NUMBER OF SCREENS
-            </label>
-            <span style={{
-              fontSize: "22px",
-              fontWeight: "bold",
-              color: "#C0202A",
-            }}>{screens}</span>
-          </div>
-          <input
-            type="range" min="1" max="7" value={screens}
-            onChange={e => setScreens(Number(e.target.value))}
-            style={{ width: "100%", accentColor: "#C0202A", height: "4px", cursor: "pointer" }}
-          />
-          <div style={{
-            display: "flex",
-            justifyContent: "space-between",
-            fontSize: "11px",
-            color: "#444",
-            marginTop: "4px",
-          }}>
-            {[1,2,3,4,5,6,7].map(n => (
-              <span key={n} style={{
-                color: screens === n ? "#C0202A" : "#444",
-                fontWeight: screens === n ? "bold" : "normal",
-              }}>{n}</span>
-            ))}
+        <div style={{ paddingTop: "14px" }}>
+          <label style={{ fontSize: "10px", letterSpacing: "2px", color: "#888", display: "block", marginBottom: "8px" }}>SECTOR (OPTIONAL)</label>
+          <div style={{ position: "relative" }}>
+            <select
+              value={sector}
+              onChange={e => setSector(e.target.value)}
+              style={{
+                width: "100%", background: "#fafafa", border: "1.5px solid #e8e8e8",
+                borderRadius: "10px", color: sector ? "#111" : "#aaa",
+                fontSize: "15px", padding: "12px 14px", outline: "none",
+                boxSizing: "border-box", fontFamily: FONT, appearance: "none",
+              }}
+            >
+              <option value="">Select your sector...</option>
+              {SECTORS.map(s => <option key={s} value={s}>{s}</option>)}
+            </select>
+            <div style={{ position: "absolute", right: "14px", top: "50%", transform: "translateY(-50%)", color: "#aaa", pointerEvents: "none" }}>▾</div>
           </div>
         </div>
 
-        {/* MONTHS SLIDER */}
-        <div style={{ padding: "20px 20px 0" }}>
-          <div style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            marginBottom: "10px",
-          }}>
-            <label style={{ fontSize: "10px", letterSpacing: "2px", color: "#888" }}>
-              DURATION (MONTHS)
-            </label>
-            <span style={{
-              fontSize: "22px",
-              fontWeight: "bold",
-              color: "#C0202A",
-            }}>{months}</span>
-          </div>
-          <input
-            type="range" min="1" max="12" value={months}
-            onChange={e => setMonths(Number(e.target.value))}
-            style={{ width: "100%", accentColor: "#C0202A", height: "4px", cursor: "pointer" }}
-          />
-          <div style={{
-            display: "flex",
-            justifyContent: "space-between",
-            fontSize: "11px",
-            color: "#444",
-            marginTop: "4px",
-          }}>
-            <span>1</span><span>3</span><span>6</span><span>12</span>
-          </div>
-        </div>
+        <Slider label="NUMBER OF SCREENS" value={screens} min={1} max={7} onChange={setScreens} ticks={[1,2,3,4,5,6,7]} />
+        <Slider label="DURATION (MONTHS)" value={months} min={1} max={12} onChange={setMonths} ticks={[1,2,3,4,5,6,7,8,9,10,11,12]} />
 
-        {/* BADGE */}
-        {badge && (
-          <div style={{ padding: "16px 20px 0" }}>
-            <div style={{
-              background: badge.bg,
-              color: badge.color,
-              fontSize: "11px",
-              fontWeight: "bold",
-              letterSpacing: "1px",
-              padding: "8px 14px",
-              borderRadius: "6px",
-              display: "inline-block",
-            }}>{badge.label}</div>
-          </div>
-        )}
-
-        {/* PRICE CARD */}
-        <div style={{
-          margin: "16px 20px 0",
-          background: "#1a1a1a",
-          borderRadius: "12px",
-          overflow: "hidden",
-          border: "1px solid #2a2a2a",
-        }}>
-          {/* Main price */}
-          <div style={{
-            background: "#C0202A",
-            padding: "20px",
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}>
+        <div style={{ marginTop: "20px", background: "#111", borderRadius: "14px", overflow: "hidden" }}>
+          <div style={{ background: RED, padding: "18px 20px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <div>
-              <div style={{ fontSize: "11px", color: "rgba(255,255,255,0.6)", marginBottom: "4px" }}>
-                PER SCREEN / MONTH
+              <div style={{ fontSize: "10px", color: "rgba(255,255,255,0.6)", marginBottom: "4px", letterSpacing: "1px" }}>PER SCREEN / MONTH</div>
+              <div style={{ fontSize: "28px", fontWeight: "800", color: "#fff", transition: "transform 0.2s", transform: pulse ? "scale(1.07)" : "scale(1)" }}>
+                ₹{perScreen.toLocaleString("en-IN")}
               </div>
-              <div style={{
-                fontSize: "28px",
-                fontWeight: "bold",
-                color: "#fff",
-                transition: "transform 0.2s",
-                transform: pulse ? "scale(1.06)" : "scale(1)",
-              }}>₹{perScreen.toLocaleString("en-IN")}</div>
             </div>
             <div style={{ textAlign: "right" }}>
-              <div style={{ fontSize: "11px", color: "rgba(255,255,255,0.6)", marginBottom: "4px" }}>
-                TOTAL
+              <div style={{ fontSize: "10px", color: "rgba(255,255,255,0.6)", marginBottom: "4px", letterSpacing: "1px" }}>TOTAL</div>
+              <div style={{ fontSize: "28px", fontWeight: "800", color: "#fff", transition: "transform 0.2s", transform: pulse ? "scale(1.07)" : "scale(1)" }}>
+                ₹{total.toLocaleString("en-IN")}
               </div>
-              <div style={{
-                fontSize: "28px",
-                fontWeight: "bold",
-                color: "#fff",
-                transition: "transform 0.2s",
-                transform: pulse ? "scale(1.06)" : "scale(1)",
-              }}>₹{total.toLocaleString("en-IN")}</div>
             </div>
           </div>
 
-          {/* Breakdown */}
           <div style={{ padding: "14px 16px" }}>
-            <div style={{
-              display: "flex",
-              justifyContent: "space-between",
-              fontSize: "13px",
-              color: "#666",
-              marginBottom: "8px",
-            }}>
-              <span>{screens} screen{screens>1?"s":""} × {months} month{months>1?"s":""}</span>
-              <span style={{ color: "#4ade80" }}>You save ₹{savings.toLocaleString("en-IN")}</span>
+            <div style={{ display: "flex", justifyContent: "space-between", fontSize: "13px", color: "#888", marginBottom: "12px" }}>
+              <span>{screens} screen{screens > 1 ? "s" : ""} × {months} month{months > 1 ? "s" : ""}</span>
+              <span style={{ color: "#4ade80", fontWeight: "600" }}>Save ₹{savings.toLocaleString("en-IN")}</span>
             </div>
-
-            <div style={{ borderTop: "1px solid #222", paddingTop: "12px" }}>
+            <div style={{ borderTop: "1px solid #222", paddingTop: "12px", display: "flex", flexDirection: "column", gap: "8px" }}>
               {includes.map((item, i) => (
-                <div key={i} style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "8px",
-                  marginBottom: "6px",
-                }}>
-                  <span style={{ color: "#C0202A", fontSize: "10px" }}>▶</span>
-                  <span style={{ color: "#888", fontSize: "13px" }}>{item}</span>
+                <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: "10px", opacity: item.locked ? 0.35 : 1, transition: "opacity 0.3s" }}>
+                  <span style={{ color: item.locked ? "#555" : RED, fontSize: "13px", marginTop: "1px", flexShrink: 0, width: "16px" }}>{item.icon}</span>
+                  <div>
+                    <span style={{ color: item.locked ? "#666" : "#ccc", fontSize: "13px" }}>{item.text}</span>
+                    {item.sub && <span style={{ color: "#555", fontSize: "11px", marginLeft: "4px" }}>{item.sub}</span>}
+                  </div>
                 </div>
               ))}
             </div>
           </div>
         </div>
 
-        {/* CTA BUTTON */}
-        <div style={{ padding: "16px 20px 0" }}>
-          <button
-            onClick={handleWhatsApp}
-            style={{
-              width: "100%",
-              background: "#25D366",
-              color: "#fff",
-              border: "none",
-              borderRadius: "10px",
-              padding: "16px",
-              fontSize: "16px",
-              fontWeight: "bold",
-              cursor: "pointer",
-              fontFamily: "'Trebuchet MS', sans-serif",
-              letterSpacing: "0.5px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: "10px",
-            }}
-          >
-            <span style={{ fontSize: "20px" }}>💬</span>
-            Request This Quote on WhatsApp
-          </button>
+        <div
+          onClick={() => setNeedCreative(!needCreative)}
+          style={{
+            marginTop: "12px",
+            border: needCreative ? `1.5px solid ${RED}` : "1.5px solid #e8e8e8",
+            background: needCreative ? "#fff5f5" : "#fafafa",
+            borderRadius: "10px", padding: "14px 16px",
+            display: "flex", alignItems: "center", gap: "12px",
+            cursor: "pointer", transition: "all 0.2s",
+          }}
+        >
           <div style={{
-            textAlign: "center",
-            fontSize: "11px",
-            color: "#444",
-            marginTop: "8px",
-          }}>Your details will be sent to our team directly</div>
-        </div>
-
-        {/* FOOTER */}
-        <div style={{
-          padding: "20px",
-          marginTop: "auto",
-          textAlign: "center",
-        }}>
-          <div style={{ fontSize: "11px", color: "#333" }}>
-            © DISCIPL Screens · A Habitoz Private Limited Brand
+            width: "20px", height: "20px", borderRadius: "5px",
+            border: needCreative ? `2px solid ${RED}` : "2px solid #ccc",
+            background: needCreative ? RED : "transparent",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            flexShrink: 0, transition: "all 0.2s",
+          }}>
+            {needCreative && <span style={{ color: "#fff", fontSize: "12px", lineHeight: 1 }}>✓</span>}
           </div>
-          <div style={{ fontSize: "12px", color: "#C0202A", marginTop: "4px", fontWeight: "bold" }}>
-            +91 97464 88282
+          <div>
+            <div style={{ fontSize: "14px", fontWeight: "600", color: "#111" }}>I need help designing my ad creative</div>
+            <div style={{ fontSize: "11px", color: "#888", marginTop: "2px" }}>Our team will get in touch with options.</div>
           </div>
         </div>
 
-      </div>
-    </div>
-  );
-}
+        <div style={{ paddingTop: "14px", paddingBottom: "32px" }}>
+          <button onClick={handleWhatsApp} style={{
+            width: "100%", background: "#25D366", color: "#fff", border: "none",
+            borderRadius: "10px", padding: "15px", fontSize: "16px", fontWeight: "700",
+            cursor: "pointer", fontFamily: FONT, display: "flex", alignItems: "center",
+            justifyContent: "center", gap: "10px", boxSizing: "border-box",
+          }}>
+            <span style={{ fontSize: "20px" }}>💬</span>
+            Request
