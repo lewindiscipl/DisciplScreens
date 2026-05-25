@@ -57,36 +57,10 @@ function calcPrice(screens, months) {
 const RED = "#C0202A";
 const FONT = "'Trebuchet MS', 'Segoe UI', sans-serif";
 
-// Single SVG logo — replica of the DISCIPL SCREENS brand mark
 function LogoImage() {
   return (
     <div style={{ width: "220px", marginBottom: "12px" }}>
-      <svg viewBox="0 0 480 180" xmlns="http://www.w3.org/2000/svg" style={{ width: "100%", display: "block" }}>
-        {/* D body */}
-        <rect x="0" y="0" width="90" height="130" fill="#111"/>
-        <ellipse cx="58" cy="65" rx="32" ry="42" fill="#fff"/>
-        <rect x="0" y="10" width="38" height="110" fill="#fff"/>
-        {/* Red arc */}
-        <path d="M26 15 Q88 65 26 115" stroke={RED} strokeWidth="16" fill="none" strokeLinecap="butt"/>
-        {/* Play arrow */}
-        <polygon points="20,52 20,78 42,65" fill="#fff"/>
-        {/* i */}
-        <rect x="102" y="30" width="18" height="70" rx="2" fill="#111"/>
-        <rect x="102" y="6" width="18" height="16" fill={RED}/>
-        {/* S */}
-        <text x="130" y="102" fontFamily="Arial Black, Arial, sans-serif" fontSize="98" fontWeight="900" fill="#111">S</text>
-        {/* C */}
-        <text x="198" y="102" fontFamily="Arial Black, Arial, sans-serif" fontSize="98" fontWeight="900" fill="#111">C</text>
-        {/* i */}
-        <rect x="272" y="30" width="18" height="70" rx="2" fill="#111"/>
-        <rect x="272" y="6" width="18" height="16" fill={RED}/>
-        {/* P */}
-        <text x="298" y="102" fontFamily="Arial Black, Arial, sans-serif" fontSize="98" fontWeight="900" fill="#111">P</text>
-        {/* L */}
-        <text x="365" y="102" fontFamily="Arial Black, Arial, sans-serif" fontSize="98" fontWeight="900" fill="#111">L</text>
-        {/* SCREENS */}
-        <text x="10" y="160" fontFamily="'Trebuchet MS', Arial, sans-serif" fontSize="24" fontWeight="400" fill="#111" letterSpacing="19">SCREENS</text>
-      </svg>
+      <img src="logo.png" alt="DISCIPL Screens" style={{ width: "100%", display: "block" }} />
     </div>
   );
 }
@@ -307,9 +281,9 @@ function PricingPage({ navigate }) {
   }, [screens, months]);
 
   const includes = [
-    { icon: "✓", text: "Ads placed on your selected screens", sub: null, locked: false, always: true },
-    { icon: months >= 2 ? "✓" : "🔒", text: "Change creatives anytime", sub: months < 2 ? "· unlocks at 2 months" : null, locked: months < 2, always: false },
-    { icon: months >= 4 ? "✓" : "🔒", text: "Category exclusivity", sub: months < 4 ? "· unlocks at 4 months" : "No competing brand runs on your selected screens", locked: months < 4, always: false },
+    { icon: "✓", text: "Ads placed on your selected screens", sub: null, locked: false },
+    { icon: months >= 2 ? "✓" : "🔒", text: "Change creatives anytime", sub: months < 2 ? "· unlocks at 2 months" : null, locked: months < 2 },
+    { icon: months >= 4 ? "✓" : "🔒", text: "Category exclusivity", sub: months < 4 ? "· unlocks at 4 months" : "No competing brand runs on your selected screens", locked: months < 4 },
   ];
 
   function handleWhatsApp() {
@@ -445,4 +419,54 @@ function PricingPage({ navigate }) {
             justifyContent: "center", gap: "10px", boxSizing: "border-box",
           }}>
             <span style={{ fontSize: "20px" }}>💬</span>
-            Request
+            Request This Quote on WhatsApp
+          </button>
+          <div style={{ textAlign: "center", fontSize: "11px", color: "#bbb", marginTop: "8px" }}>
+            Your details will be sent to our team directly
+          </div>
+        </div>
+
+        <div style={{ textAlign: "center", paddingBottom: "28px" }}>
+          <div style={{ fontSize: "11px", color: "#ccc" }}>© DISCIPL Screens · A Habitoz Private Limited Brand</div>
+          <div style={{ fontSize: "12px", color: RED, marginTop: "4px", fontWeight: "700" }}>+91 97464 88282</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Slider({ label, value, min, max, onChange, ticks }) {
+  return (
+    <div style={{ paddingTop: "18px" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "10px" }}>
+        <label style={{ fontSize: "10px", letterSpacing: "2px", color: "#888" }}>{label}</label>
+        <span style={{ fontSize: "22px", fontWeight: "800", color: RED }}>{value}</span>
+      </div>
+      <input
+        type="range" min={min} max={max} value={value}
+        onChange={e => onChange(Number(e.target.value))}
+        style={{ width: "100%", accentColor: RED, height: "4px", cursor: "pointer" }}
+      />
+      <div style={{ display: "flex", justifyContent: "space-between", fontSize: "10px", marginTop: "4px" }}>
+        {ticks.map(n => (
+          <span key={n} style={{ color: value === n ? RED : "#ccc", fontWeight: value === n ? "700" : "400", minWidth: "6px", textAlign: "center" }}>
+            {n}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export default function App() {
+  const [page, setPage] = useState("home");
+  return (
+    <div style={{ minHeight: "100vh", background: "#f0f0f0", display: "flex", justifyContent: "center" }}>
+      <div style={{ width: "100%", maxWidth: "430px", minHeight: "100vh", background: "#fff", boxShadow: "0 0 40px rgba(0,0,0,0.08)" }}>
+        {page === "home" && <HomePage navigate={setPage} />}
+        {page === "locations" && <LocationsPage navigate={setPage} />}
+        {page === "pricing" && <PricingPage navigate={setPage} />}
+      </div>
+    </div>
+  );
+}
