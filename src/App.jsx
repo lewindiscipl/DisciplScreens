@@ -256,6 +256,7 @@ function LocationsPage({ navigate }) {
     background: "#fff",
     padding: "14px 20px 24px",
     borderTop: "1px solid #f0f0f0",
+    zIndex: 20,
   }}
 >
   <button
