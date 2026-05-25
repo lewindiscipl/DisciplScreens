@@ -249,16 +249,34 @@ function LocationsPage({ navigate }) {
         ))}
       </div>
 
-      <div style={{ padding: "0 20px 32px", marginTop: "auto" }}>
-        <button onClick={() => navigate("pricing")} style={{
-          width: "100%", background: RED, color: "#fff", border: "none",
-          borderRadius: "10px", padding: "15px", fontSize: "15px", fontWeight: "700",
-          cursor: "pointer", fontFamily: FONT, boxSizing: "border-box",
-        }}>
-          Get Pricing for These Screens →
-        </button>
-      </div>
-    </div>
+      <div
+  style={{
+    position: "sticky",
+    bottom: 0,
+    background: "#fff",
+    padding: "14px 20px 24px",
+    borderTop: "1px solid #f0f0f0",
+  }}
+>
+  <button
+    onClick={() => navigate("pricing")}
+    style={{
+      width: "100%",
+      background: RED,
+      color: "#fff",
+      border: "none",
+      borderRadius: "10px",
+      padding: "15px",
+      fontSize: "15px",
+      fontWeight: "700",
+      cursor: "pointer",
+      fontFamily: FONT,
+      boxSizing: "border-box",
+    }}
+  >
+    Get Pricing for These Screens →
+  </button>
+</div>
   );
 }
 
