@@ -376,8 +376,8 @@ function PricingPage({ navigate }) {
                 <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: "10px", opacity: item.locked ? 0.35 : 1, transition: "opacity 0.3s" }}>
                   <span style={{ color: item.locked ? "#555" : RED, fontSize: "13px", marginTop: "1px", flexShrink: 0, width: "16px" }}>{item.icon}</span>
                   <div>
-                    <span style={{ color: item.locked ? "#b0b0b0" : "#f0f0f0", fontSize: "13px" }}>{item.text}</span>
-                    {item.sub && <span style={{ color: "#555", fontSize: "11px", marginLeft: "4px" }}>{item.sub}</span>}
+                    <span style={{ color: item.locked ? "#d0d0d0" : "#ffffff", fontSize: "13px" }}>{item.text}</span>
+                    {item.sub && <span style={{ color: "#c0c0c0", fontSize: "11px", marginLeft: "4px" }}>{item.sub}</span>}
                   </div>
                 </div>
               ))}
