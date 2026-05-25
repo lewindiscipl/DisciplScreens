@@ -139,7 +139,8 @@ function HomePage({ navigate }) {
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
-      justifyContent: "center",
+      justifyContent: "flex-start",
+      paddingTop: "80px",
       fontFamily: FONT,
       padding: "32px 24px",
       boxSizing: "border-box",
@@ -174,6 +175,64 @@ function HomePage({ navigate }) {
         />
       </div>
 
+      <div style={{
+  width: "100%",
+  maxWidth: "340px",
+  marginTop: "26px",
+  display: "grid",
+  gridTemplateColumns: "1fr 1fr",
+  gap: "10px",
+}}>
+
+  {[
+    {
+      title: "High Spending Audience",
+      sub: "Fitness-focused consumers with strong buying intent"
+    },
+    {
+      title: "Daily Repeat Visibility",
+      sub: "Your brand seen consistently during workouts"
+    },
+    {
+      title: "Premium Local Reach",
+      sub: "Target active communities across Kozhikode"
+    },
+    {
+      title: "Less Ad Noise",
+      sub: "No cluttered feeds or skipped advertisements"
+    },
+  ].map((item, i) => (
+    <div
+      key={i}
+      style={{
+        background: "#fafafa",
+        border: "1px solid #f0f0f0",
+        borderRadius: "12px",
+        padding: "14px",
+        boxSizing: "border-box",
+      }}
+    >
+      <div style={{
+        fontSize: "12px",
+        fontWeight: "700",
+        color: "#111",
+        marginBottom: "6px",
+        lineHeight: "1.3",
+      }}>
+        {item.title}
+      </div>
+
+      <div style={{
+        fontSize: "10px",
+        color: "#888",
+        lineHeight: "1.45",
+      }}>
+        {item.sub}
+      </div>
+    </div>
+  ))}
+</div>
+      
       <div style={{ marginTop: "40px", fontSize: "11px", color: "#ccc", letterSpacing: "0.5px", textAlign: "center" }}>
         A Habitoz Private Limited Brand
       </div>
