@@ -60,7 +60,7 @@ const FONT = "'Trebuchet MS', 'Segoe UI', sans-serif";
 function LogoImage() {
   return (
     <div style={{ width: "220px", marginBottom: "12px" }}>
-      <img src="logo.png" alt="DISCIPL Screens" style={{ width: "100%", display: "block" }} />
+      <img src="/logo.png" alt="DISCIPL Screens" style={{ width: "100%", display: "block" }} />
     </div>
   );
 }
