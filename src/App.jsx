@@ -140,9 +140,8 @@ function HomePage({ navigate }) {
       flexDirection: "column",
       alignItems: "center",
       justifyContent: "flex-start",
-      paddingTop: "80px",
       fontFamily: FONT,
-      padding: "32px 24px",
+      padding: "80px 24px 32px",
       boxSizing: "border-box",
     }}>
       <LogoImage />
@@ -178,37 +177,61 @@ function HomePage({ navigate }) {
       <div style={{
   width: "100%",
   maxWidth: "340px",
-  marginTop: "26px",
+  marginTop: "70px",
+  marginBottom: "18px",
+}}>
+  <div style={{
+    fontSize: "20px",
+    fontWeight: "800",
+    color: "#111",
+    marginBottom: "8px",
+    lineHeight: "1.2",
+  }}>
+    Why Brands Choose DISCIPL Screens
+  </div>
+
+  <div style={{
+    fontSize: "13px",
+    color: "#777",
+    lineHeight: "1.6",
+  }}>
+    Built for brands that want consistent local visibility inside premium fitness environments.
+  </div>
+</div>
+      <div style={{
+  width: "100%",
+  maxWidth: "340px",
+  marginTop: "0px",
   display: "grid",
   gridTemplateColumns: "1fr 1fr",
   gap: "10px",
 }}>
 
-  {[
-    {
-      title: "High Spending Audience",
-      sub: "Fitness-focused consumers with strong buying intent"
-    },
-    {
-      title: "Daily Repeat Visibility",
-      sub: "Your brand seen consistently during workouts"
-    },
-    {
-      title: "Premium Local Reach",
-      sub: "Target active communities across Kozhikode"
-    },
-    {
-      title: "Less Ad Noise",
-      sub: "No cluttered feeds or skipped advertisements"
-    },
+{[
+  {
+    title: "Fitness-Focused Audience",
+    sub: "People investing in fitness and lifestyle are naturally higher-intent consumers."
+  },
+  {
+    title: "High Attention Environment",
+    sub: "Unlike crowded feeds, gym environments create calmer and more focused visibility."
+  },
+  {
+    title: "Daily Brand Recall",
+    sub: "Repeated exposure during workouts improves familiarity and local recognition."
+  },
+  {
+    title: "Premium Local Reach",
+    sub: "Position your brand inside active communities across Kozhikode."
+  },
   ].map((item, i) => (
     <div
       key={i}
       style={{
-        background: "#fafafa",
-        border: "1px solid #f0f0f0",
+        background: "#fcfcfc",
+        border: "1px solid #f5f5f5",
         borderRadius: "12px",
-        padding: "14px",
+        padding: "18px",
         boxSizing: "border-box",
       }}
     >
