@@ -278,6 +278,8 @@ function LocationsPage({ navigate }) {
     Get Pricing for These Screens →
   </button>
 </div>
+
+</div>
   );
 }
 
