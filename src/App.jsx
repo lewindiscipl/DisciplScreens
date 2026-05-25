@@ -316,7 +316,7 @@ function PricingPage({ navigate }) {
           <input
             value={brand}
             onChange={e => { setBrand(e.target.value); setError(""); }}
-            placeholder="e.g. Alpha Supplements"
+            placeholder="Your Brand Name"
             style={{
               width: "100%", background: "#fafafa",
               border: error ? `1.5px solid ${RED}` : "1.5px solid #e8e8e8",
